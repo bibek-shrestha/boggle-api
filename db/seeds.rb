@@ -5,3 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+File.open(File.join(Rails.public_path, 'en.txt')) do |file|
+    file.each do |line|
+        word = Word.create({value: line.strip})
+    end
+end
