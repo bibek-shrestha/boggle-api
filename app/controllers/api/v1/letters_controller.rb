@@ -8,7 +8,7 @@ module Api
                 render json: { letters: generate }, status: :ok
             end
 
-            def create                                                      
+            def validate                                                      
                 render json: { valid: checkWord(params[:word]) }, status: :ok
             end
 
