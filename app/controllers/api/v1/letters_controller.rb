@@ -1,39 +1,33 @@
-require 'net/https'
-require 'httparty'
-
 module Api
-    module V1
-        class LettersController < ApplicationController
-            def index
-                render json: { letters: generate }, status: :ok
-            end
+  module V1
+    class LettersController < ApplicationController
+      include Response
 
-            def validate                                                      
-                render json: { valid: checkWord(params[:word]) }, status: :ok
-            end
-
-            private
-
-            def generate
-                randomAlphabets = (0...16).map { ('A'..'Z').to_a[rand(26)] }
-                letters = Array.new
-                row = 0
-                column = 0
-                randomAlphabets.each_with_index do |l, i|
-                    if column > 3
-                        row = row + 1
-                        column = 0
-                    end
-                    letters << Letter.new(l, row, column)
-                    column = column + 1    
-                end
-                letters
-            end
-
-
-            def checkWord(word)
-               exists =  Word.where(value: word).exists?
-            end
+      def index
+        begin
+          letters = LetterGenerator.instance.generate
+          get_json_response(letters, :ok)
+        rescue StandardError => e
+          handleError(e)
         end
+      end
+
+      def validate
+        begin
+          word = params[:word].strip
+          isValid = WordValidator.instance.validate(word)
+          get_json_response({isValid: isValid}, :ok)
+        rescue StandardError => e
+          handleError(e)
+        end
+      end
+
+      private
+
+      def handleError(error)
+        logger.error(error.message)
+        get_json_response(error.message, :internal_server_error)
+      end
     end
+  end
 end
