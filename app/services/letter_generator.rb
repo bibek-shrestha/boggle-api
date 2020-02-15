@@ -1,8 +1,6 @@
-require 'singleton'
 class LetterGenerator
-  include Singleton
 
-  def generate
+  def self.generate
     randomAlphabets = (0...16).map { ('A'..'Z').to_a[rand(26)] }
     letters = Array.new
     row = 0

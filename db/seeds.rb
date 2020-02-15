@@ -12,13 +12,18 @@
 # end
 #
 connection = ActiveRecord::Base.connection
-
-sql = File.read('db/englishdictionary.sql') # Change path and filename as necessary
-statements = sql.split(/;$/)
-statements.pop
-
+if Rails.env.development?
+  sql = File.read('db/englishdictionary.sql') # Change path and filename as necessary
+  statements = sql.split(/;$/)
+  statements.pop
+end
+if Rails.env.test?
+  sql = File.read('db/testdictionary.sql') # Change path and filename as necessary
+  statements = sql.split(/;$/)
+  statements.pop
+end
 ActiveRecord::Base.transaction do
-    statements.each do |statement|
-        connection.execute(statement)
-    end
+  statements.each do |statement|
+    connection.execute(statement)
+  end
 end

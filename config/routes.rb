@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       get "generate", controller: :letters, action: :index
-      get "validate", controller: :letters, action: :validate
+      get "validate", controller: :words, action: :index
     end
   end
 end
