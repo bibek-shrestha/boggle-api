@@ -15,5 +15,10 @@ RSpec.describe Api::V1::LettersController, type: :controller do
     it 'has keys' do
       expect(json.keys).to contain_exactly(:data, :status)
     end
+
+    it 'has albhabets for label' do
+      characters = json[:data].map {|d| d[:label]}
+      expect(characters).to all(match(/[A-z]/))
+    end
   end
 end
