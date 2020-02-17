@@ -1,24 +1,16 @@
-# README
+# Boggle API
+## Steps:
+* You must have mysql installed and running before you proceed.
+* Go to `config/database.yml`
+* Set `username` and `password` according to your environment.
+* Run `rake db:create`
+* Run `rails db:migrate`
+* To populate the database with english dictionary word run `rake db:seed`
+* To run tests, run
+* > `bundle exec rspec`
+* To start application in development mode, run
+* > `rails server`
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+**Note:**
+*This application is built on ruby version 2.7.0.*
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
